@@ -8,7 +8,7 @@ Engage currently includes the following features:
 
 - Chatting with the OpenAI API
 
-![Screenshot of Engage chat screen](/screenshots/chat-screen.png)
+![Screenshot of Engage chat screen](Screenshots/chat-screen.png)
 
 ## Getting Started
 
