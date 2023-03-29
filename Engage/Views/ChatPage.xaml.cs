@@ -32,5 +32,20 @@ namespace Engage.Views
                 ViewModel.InputMessageSource = MessageTypeComboBox.SelectedIndex == 0 ? "user" : "assistant";
             }
         }
+
+        private void ChatTabView_AddTabButtonClick(TabView sender, object args)
+        {
+            var newTab = new TabViewItem
+            {
+                Header = "Chat " + (ChatTabView.TabItems.Count + 1)
+            };
+            ChatTabView.TabItems.Add(newTab);
+            ChatTabView.SelectedItem = newTab;
+        }
+
+        private void ChatTabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+        {
+            sender.TabItems.Remove(args.Tab);
+        }
     }
 }
