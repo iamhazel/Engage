@@ -1,0 +1,33 @@
+<!-- Engage.Views.SettingsPage.xaml -->
+<Page
+    x:Class="Engage.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Engage.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    x:Name = "SettingsPageRoot">
+
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="30">
+        <Button x:Name="UpdateApiKeyButton" Content="Update" Margin="10,0,20,0" >
+            <Button.Flyout>
+                <Flyout>
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Update API Key" FontWeight="Bold" FontSize="20" Margin="0,0,0,10" />
+                        <TextBox x:Name="NewApiKeyTextBox" PlaceholderText="New API key" Margin="0,0,0,10" />
+                        <StackPanel Orientation="Horizontal">
+                            <ToggleSwitch x:Name="ConfirmSaveToggle" OffContent="Disabled" OnContent="Enabled" Margin="0,0,10,0" />
+                            <Button x:Name="SaveButton" Content="Save" IsEnabled="False" Click="SaveButton_Click" />
+                        </StackPanel>
+                    </StackPanel>
+                </Flyout>
+            </Button.Flyout>
+        </Button>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <TextBlock Text="OpenAI API Key: " VerticalAlignment="Center" />
+            <TextBlock x:Name="ApiKeyTextBlock" Text="{Binding ApiKey, Mode=OneWay}" Margin="5,0" VerticalAlignment="Center" />
+            <HyperlinkButton x:Name="ApiKeyCopyButton" Content="Copy" Click="ApiKeyCopy_Click" Margin="5,0,0,0" />
+        </StackPanel>
+    </StackPanel>
+</Page>

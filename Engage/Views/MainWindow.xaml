@@ -1,0 +1,71 @@
+<Window x:Class="Engage.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <NavigationView PaneDisplayMode="Top"
+                            IsPaneOpen="False"
+                            IsBackButtonVisible="Collapsed"
+                            IsSettingsVisible="False"
+                            Grid.Row="0">
+        </NavigationView>
+
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal" Grid.Column="1">
+                
+                <TextBlock x:Name="AppTitle" Text="Engage" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0" FontWeight="SemiBold" />
+                
+                <MenuBar>
+                    <MenuBarItem Title="File" />
+                    <MenuBarItem Title="Edit" />
+                    <MenuBarItem Title="View" />
+                    <MenuBarItem Title="Help" />
+                </MenuBar>
+            </StackPanel>
+            
+            <AutoSuggestBox PlaceholderText="Search" QueryIcon="Find" HorizontalAlignment="Center" VerticalAlignment="Center" Width="225" Height="32" />
+        </Grid>
+
+        <NavigationView x:Name="MainNavigationView"
+                        Grid.Row="1"
+                        PaneDisplayMode="LeftCompact"
+                        IsPaneOpen="False"
+                        IsBackButtonVisible="Collapsed"
+                        SelectionChanged="MainNavigationView_SelectionChanged"
+                        IsTabStop="True"
+                        IsSettingsVisible="True"
+                        OpenPaneLength="200"
+                        ShoulderNavigationEnabled="Always" >
+
+            <NavigationView.MenuItems>
+                <NavigationViewItem Icon="Home" Content="Home" Tag="Home" />
+                <NavigationViewItem Icon="Comment" Content="Chat" Tag="Chat" />
+            </NavigationView.MenuItems>
+
+            <Frame x:Name="MainFrame" />
+        </NavigationView>
+
+        <Grid x:Name="AppTitleBar" HorizontalAlignment="Right" Width="128" Height="48">
+        </Grid>
+
+    </Grid>
+
+</Window>
+    
+    
