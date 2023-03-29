@@ -26,6 +26,30 @@ namespace Engage.Views
         {
             _viewModel.CloseTab(args.Item as ChatTabViewModel);
         }
-    }
 
+        private void RoleSelectionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (RoleSelectionComboBox.SelectedIndex == 1)
+            {
+                ModelSelectionComboBox.IsEnabled = false;
+            }
+            else
+            {
+                ModelSelectionComboBox.IsEnabled = true;
+            }
+        }
+
+        // If the text box is empty, disable the send button
+        private void NewMessageTextBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(NewMessageTextBox.Text))
+            {
+                MessageSendButton.IsEnabled = false;
+            }
+            else
+            {
+                MessageSendButton.IsEnabled = true;
+            }
+        }
+    }
 }
