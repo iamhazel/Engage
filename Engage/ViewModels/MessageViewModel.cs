@@ -1,5 +1,5 @@
 ﻿// [FILE] Engage.ViewModels.MessageViewModel.cs
-using Engage.ChatGPT.Models;
+using Engage.OpenAI.Models;
 using Engage.Models;
 
 namespace Engage.ViewModels

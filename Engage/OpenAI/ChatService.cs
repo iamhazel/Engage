@@ -1,11 +1,11 @@
-﻿// [FILE] Engage.ChatGPT.ChatService.cs
-using Engage.ChatGPT.Models;
+﻿// [FILE] Engage.OpenAI.ChatService.cs
+using Engage.OpenAI.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace Engage.ChatGPT
+namespace Engage.OpenAI
 {
     public class ChatService : IChatService
     {

@@ -13,6 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Views\ChatPage.xaml" />
+    <None Remove="Views\Controls\Alert.xaml" />
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\MainWindow.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
@@ -73,6 +74,11 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Controls\Alert.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

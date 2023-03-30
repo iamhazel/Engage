@@ -1,8 +1,8 @@
-﻿// [FILE] Engage.ChatGPT.IApiClient.cs
+﻿// [FILE] Engage.OpenAI.IApiClient.cs
 using System.Threading.Tasks;
-using Engage.ChatGPT.Models;
+using Engage.OpenAI.Models;
 
-namespace Engage.ChatGPT
+namespace Engage.OpenAI
 {
     public interface IApiClient
     {

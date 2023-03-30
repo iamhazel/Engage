@@ -1,7 +1,7 @@
-﻿// [FILE] Engage.ChatGPT.Models.ApiRequestOptions.cs
+﻿// [FILE] Engage.OpenAI.Models.ApiRequestOptions.cs
 using System.Collections.Generic;
 
-namespace Engage.ChatGPT.Models
+namespace Engage.OpenAI.Models
 {
     public class ApiRequestOptions
     {

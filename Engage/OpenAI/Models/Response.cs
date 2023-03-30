@@ -1,4 +1,4 @@
-﻿// [FILE] Engage.ChatGPT.Models.Response.cs
+﻿// [FILE] Engage.OpenAI.Models.Response.cs
 using Engage.Converters;
 using Engage.Helpers;
 using Newtonsoft.Json;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
 
-namespace Engage.ChatGPT.Models
+namespace Engage.OpenAI.Models
 {
     public class Response
     {
