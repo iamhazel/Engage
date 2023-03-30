@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-namespace Engage.Models;
+namespace Engage.Helpers;
 
 public class CustomRelayCommand : ICommand, INotifyPropertyChanged
 {

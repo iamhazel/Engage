@@ -1,7 +1,7 @@
 ﻿// [FILE] Engage.ViewModels.ChatTabViewModel.cs
-using Engage.ChatGPT;
-using Engage.ChatGPT.Models;
-using Engage.Models;
+using Engage.Helpers;
+using Engage.OpenAI;
+using Engage.OpenAI.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml.Controls;
 using System;

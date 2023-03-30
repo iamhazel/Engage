@@ -1,6 +1,6 @@
 ﻿// Engage.DependencyInjection.cs
 using Engage;
-using Engage.ChatGPT;
+using Engage.OpenAI;
 using Engage.ViewModels;
 using Engage.Views;
 using Engage.Helpers;

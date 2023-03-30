@@ -1,5 +1,5 @@
-﻿// [FILE] Engage.ChatGPT.ApiClient.cs
-using Engage.ChatGPT.Models;
+﻿// [FILE] Engage.OpenAI.ApiClient.cs
+using Engage.OpenAI.Models;
 using Engage.Converters;
 using Engage.Helpers;
 using Microsoft.Extensions.Logging;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Engage.ChatGPT
+namespace Engage.OpenAI
 {
     // This class is responsible for sending messages to the OpenAI API
     public class ApiClient : IApiClient
