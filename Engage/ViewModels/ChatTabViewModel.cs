@@ -87,6 +87,10 @@ namespace Engage.ViewModels
             TabName = tabName;
         }
 
+        public void ClearMessages()
+        {
+            Messages.Clear();
+        }
 
         // Existing SendMessageAsync method
         private async Task SendMessageAsync()

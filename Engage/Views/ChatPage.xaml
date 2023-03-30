@@ -9,96 +9,129 @@
     xmlns:vm="using:Engage.ViewModels"
     mc:Ignorable="d">
 
-    <Grid Padding="10">
+    <Grid>
         <Grid.RowDefinitions>
+            <!--  Tab Bar  -->
+            <RowDefinition Height="Auto" />
+            <!--  Chat Area  -->
             <RowDefinition Height="*" />
+            <!--  Controls  -->
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TabView
-            x:Name="ChatTabView"
-            Grid.Row="0"
-            AddTabButtonClick="ChatTabView_AddTabButtonClick"
-            TabCloseRequested="ChatTabView_TabCloseRequested"
-            TabItemsSource="{Binding Tabs}">
-            <TabView.TabItemTemplate>
-                <DataTemplate x:DataType="viewModels:ChatTabViewModel">
-                    <TabViewItem x:Name="ChatTabViewItem" Header="{Binding TabName}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <ScrollViewer
-                                Grid.Row="0"
-                                HorizontalScrollBarVisibility="Disabled"
-                                VerticalScrollBarVisibility="Auto">
-                                <ItemsControl ItemsSource="{Binding Messages}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid Margin="10">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto" />
-                                                    <RowDefinition Height="*" />
-                                                </Grid.RowDefinitions>
-
-                                                <TextBlock
-                                                    Grid.Row="0"
-                                                    Margin="0,0,0,10"
-                                                    HorizontalAlignment="{Binding ChatMessageType, Converter={StaticResource RoleToAlignmentConverter}}"
-                                                    VerticalAlignment="Top"
-                                                    FontSize="12"
-                                                    FontWeight="SemiBold"
-                                                    Text="{Binding Role, Converter={StaticResource StringToTitleCaseConverter}}" />
-
-                                                <Border
-                                                    x:Name="ChatBorder"
-                                                    Grid.Row="1"
-                                                    MaxWidth="700"
-                                                    Padding="10"
-                                                    HorizontalAlignment="{Binding ChatMessageType, Converter={StaticResource RoleToAlignmentConverter}}"
-                                                    Background="{Binding ChatMessageType, Converter={StaticResource ChatMessageTypeToBackgroundColorConverter}}"
-                                                    BorderThickness="1"
-                                                    CornerRadius="5">
-                                                    <TextBlock
-                                                        FontSize="14"
-                                                        Foreground="{Binding ChatMessageType, Converter={StaticResource ChatMessageTypeToForegroundColorConverter}}"
-                                                        IsTextSelectionEnabled="True"
-                                                        Text="{Binding Content}"
-                                                        TextWrapping="Wrap" />
-                                                </Border>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </ScrollViewer>
-                        </Grid>
-                    </TabViewItem>
-                </DataTemplate>
-            </TabView.TabItemTemplate>
-        </TabView>
-        <Grid
-            Grid.Row="1"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Bottom"
-            DataContext="{Binding SelectedItem, ElementName=ChatTabView}">
+        <!--  TAB BAR  -->
+        <Grid Background="{StaticResource LayerOnAccentAcrylicFillColorDefault}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
+                <!--  Tab Bar  -->
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
+                <!--  Clear Button  -->
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+
+            <!--  Tab Bar  -->
+            <TabView
+                x:Name="ChatTabView"
+                Grid.Row="0"
+                Grid.Column="0"
+                AddTabButtonClick="ChatTabView_AddTabButtonClick"
+                TabCloseRequested="ChatTabView_TabCloseRequested"
+                TabItemsSource="{Binding Tabs}"
+                TabWidthMode="SizeToContent">
+                <TabView.TabItemTemplate>
+                    <DataTemplate x:DataType="viewModels:ChatTabViewModel">
+                        <TabViewItem x:Name="ChatTabViewItem" Header="{Binding TabName}" />
+                    </DataTemplate>
+                </TabView.TabItemTemplate>
+            </TabView>
+
+            <!--  Clear Button  -->
+            <HyperlinkButton
+                x:Name="TabClearMessages"
+                Grid.Row="0"
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Click="TabClearMessages_Click"
+                Content="Clear" />
+        </Grid>
+
+        <!--  Chat Area  -->
+        <ScrollViewer
+            Grid.Row="1"
+            Padding="10"
+            HorizontalScrollBarVisibility="Disabled"
+            VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding ElementName=ChatTabView, Path=SelectedItem.Messages}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock
+                                Grid.Row="0"
+                                Margin="0,0,0,10"
+                                HorizontalAlignment="{Binding ChatMessageType, Converter={StaticResource RoleToAlignmentConverter}}"
+                                VerticalAlignment="Top"
+                                FontSize="12"
+                                FontWeight="SemiBold"
+                                Text="{Binding Role, Converter={StaticResource StringToTitleCaseConverter}}" />
+
+                            <Border
+                                x:Name="ChatBorder"
+                                Grid.Row="1"
+                                MaxWidth="700"
+                                Padding="10"
+                                HorizontalAlignment="{Binding ChatMessageType, Converter={StaticResource RoleToAlignmentConverter}}"
+                                Background="{Binding ChatMessageType, Converter={StaticResource ChatMessageTypeToBackgroundColorConverter}}"
+                                BorderThickness="1"
+                                CornerRadius="5">
+                                <TextBlock
+                                    FontSize="14"
+                                    Foreground="{Binding ChatMessageType, Converter={StaticResource ChatMessageTypeToForegroundColorConverter}}"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{Binding Content}"
+                                    TextWrapping="Wrap" />
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+
+        <!--  CONTROLS  -->
+        <Grid Grid.Row="2" Padding="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <!--  Role Selection  -->
+                <ColumnDefinition Width="Auto" />
+                <!--  Message Textbox  -->
+                <ColumnDefinition Width="*" />
+                <!--  Model Selection  -->
+                <ColumnDefinition Width="Auto" />
+                <!--  Message Send  -->
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!--  Role  -->
             <ComboBox
                 x:Name="RoleSelectionComboBox"
                 Grid.Column="0"
                 Width="Auto"
                 Margin="5"
                 VerticalAlignment="Bottom"
-                SelectedIndex="{Binding SelectedRoleIndex, Mode=TwoWay}"
+                SelectedIndex="{Binding ElementName=ChatTabView, Path=SelectedItem.SelectedRoleIndex, Mode=TwoWay}"
                 SelectionChanged="RoleSelectionComboBox_SelectionChanged ">
                 <ComboBoxItem Content="User" />
                 <ComboBoxItem Content="Assistant" />
             </ComboBox>
+
+            <!--  Input  -->
             <TextBox
                 x:Name="NewMessageTextBox"
                 Grid.Column="1"
@@ -109,29 +142,32 @@
                 AcceptsReturn="True"
                 PlaceholderText="All that is gold does not glitter..."
                 SelectionChanged="NewMessageTextBox_SelectionChanged"
-                Text="{Binding NewMessageText, Mode=TwoWay}" />
+                Text="{Binding ElementName=ChatTabView, Path=SelectedItem.NewMessageText, Mode=TwoWay}" />
+
+            <!--  Model  -->
             <ComboBox
                 x:Name="ModelSelectionComboBox"
                 Grid.Column="2"
                 Width="150"
                 Margin="5"
                 VerticalAlignment="Bottom"
-                SelectedIndex="{Binding SelectedModelIndex, Mode=TwoWay}">
+                SelectedIndex="{Binding ElementName=ChatTabView, Path=SelectedItem.SelectedModelIndex, Mode=TwoWay}">
                 <ComboBoxItem Content="GPT-4" />
                 <ComboBoxItem Content="GPT-3.5 Turbo" />
+
             </ComboBox>
+            <!--  Send  -->
             <Button
                 x:Name="MessageSendButton"
                 Grid.Column="3"
                 Width="Auto"
                 Margin="5"
                 VerticalAlignment="Bottom"
-                Command="{Binding SendMessageCommand}"
+                Command="{Binding ElementName=ChatTabView, Path=SelectedItem.SendMessageCommand, Mode=TwoWay}"
                 IsEnabled="False"
                 Style="{StaticResource AccentButtonStyle}">
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE725;" />
             </Button>
         </Grid>
-
     </Grid>
 </Page>

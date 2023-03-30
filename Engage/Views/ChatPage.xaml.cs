@@ -3,12 +3,15 @@ using Engage.ChatGPT;
 using Engage.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
+
 namespace Engage.Views
 {
     public sealed partial class ChatPage : Page
     {
         private readonly ChatViewModel _viewModel;
         private int _tabCount = 0;
+        private string _newMessageTextBoxValue;
 
         public ChatPage(ChatViewModel viewModel)
         {
@@ -39,7 +42,6 @@ namespace Engage.Views
             }
         }
 
-        // If the text box is empty, disable the send button
         private void NewMessageTextBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(NewMessageTextBox.Text))
@@ -50,6 +52,24 @@ namespace Engage.Views
             {
                 MessageSendButton.IsEnabled = true;
             }
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            _newMessageTextBoxValue = NewMessageTextBox.Text;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            NewMessageTextBox.Text = _newMessageTextBoxValue;
+        }
+
+        private void TabClearMessages_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedTab = ChatTabView.SelectedItem as ChatTabViewModel;
+            selectedTab?.ClearMessages();
         }
     }
 }
