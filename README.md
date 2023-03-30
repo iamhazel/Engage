@@ -6,7 +6,10 @@ Engage is a personal project for learning WinAppSDK, WinUI3, and Windows develop
 
 Engage currently includes the following features:
 
-- Chatting with the OpenAI API
+- Chat with GPT-3.5 or GPT-4.
+- Set or change API key in Settings.
+- Send messages as GPT.
+- Multiple conversations via tabs.
 
 ![Screenshot of Engage chat screen](Screenshots/chat-screen.png)
 
