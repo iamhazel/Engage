@@ -9,7 +9,7 @@
     xmlns:viewModels="using:Engage.ViewModels"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <!--  Tab Bar  -->
             <RowDefinition Height="Auto" />
@@ -80,7 +80,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <controls:Alert Grid.Row="0" />
+            <!--<controls:Alert Grid.Row="0" />-->
 
             <!--  Chat Area  -->
             <ScrollViewer

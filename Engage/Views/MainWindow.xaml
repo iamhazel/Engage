@@ -41,9 +41,25 @@
 
                 <MenuBar>
                     <MenuBarItem Title="File" />
+
                     <MenuBarItem Title="Edit" />
+
                     <MenuBarItem Title="View" />
-                    <MenuBarItem Title="Help" />
+
+                    <MenuBarItem Title="Help">
+                        <MenuFlyoutItem Text="About" />
+                    </MenuBarItem>
+
+                    <MenuBarItem Title="Developer">
+                        <MenuFlyoutSubItem Text="Events">
+                            <MenuFlyoutItem
+                                x:Name="DevSendAlert"
+                                Click="DevSendAlert_Click"
+                                Text="Send Alert" />
+                        </MenuFlyoutSubItem>
+                        <MenuFlyoutSeparator />
+                        <MenuFlyoutItem Text="Contribute" />
+                    </MenuBarItem>
                 </MenuBar>
             </StackPanel>
 

@@ -3,7 +3,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Engage.OpenAI;
-using Engage.Models;
+using Engage.Helpers;
 
 namespace Engage.ViewModels
 {

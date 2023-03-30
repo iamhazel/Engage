@@ -1,6 +1,8 @@
 // [FILE] Engage.Views.ChatPage.xaml.cs
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using Engage.Helpers;
 using Engage.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -19,7 +21,18 @@ namespace Engage.Views
         {
             InitializeComponent();
             _viewModel = viewModel;
+            AlertManager.ShowAlertEvent += OnAlertManagerShowAlert;
             DataContext = _viewModel;
+        }
+
+        private void OnAlertManagerShowAlert(object sender, EventArgs e)
+        {
+            var properties = new Dictionary<DependencyProperty, int>
+            {
+                { Grid.RowProperty, 1 },
+                { Grid.ColumnProperty, 0 },
+            };
+            AlertManager.OnShowAlert(sender, e, MainGrid, properties);
         }
 
         private void ScrollToBottom()
@@ -27,7 +40,7 @@ namespace Engage.Views
             ChatScrollViewer.ChangeView(null, ChatScrollViewer.ScrollableHeight, null);
         }
 
-        private void NewMessageTextBox_SelectionChanged(object sender, RoutedEventArgs e)
+        private void NewMessageTextBox_SelectionChanged(object sender, RoutedEventArgs e         )
         {
             if (string.IsNullOrEmpty(NewMessageTextBox.Text))
             {
@@ -42,6 +55,7 @@ namespace Engage.Views
         private void ChatTabView_AddTabButtonClick(TabView sender, object args)
         {
             _viewModel.AddTab();
+            sender.SelectedIndex = sender.TabItems.Count - 1;
         }
 
         private void ChatTabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
@@ -93,6 +107,7 @@ namespace Engage.Views
         {
             base.OnNavigatedFrom(e);
             _newMessageTextBoxValue = NewMessageTextBox.Text;
+            AlertManager.ShowAlertEvent -= OnAlertManagerShowAlert;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

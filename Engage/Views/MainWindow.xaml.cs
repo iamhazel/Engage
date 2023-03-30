@@ -7,6 +7,7 @@ using Engage.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using Engage.Views.Controls;
 
 namespace Engage.Views
 {
@@ -78,6 +79,11 @@ namespace Engage.Views
                     throw;
                 }
             }
+        }
+
+        private void DevSendAlert_Click(object sender, RoutedEventArgs e)
+        {
+            AlertManager.RaiseShowAlertEvent(sender);
         }
     }
 }

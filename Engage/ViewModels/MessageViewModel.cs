@@ -1,6 +1,6 @@
 ﻿// [FILE] Engage.ViewModels.MessageViewModel.cs
 using Engage.OpenAI.Models;
-using Engage.Models;
+using Engage.Helpers;
 
 namespace Engage.ViewModels
 {

@@ -1,5 +1,5 @@
 ﻿// [FILE] Engage.ViewModels.ChatTabViewModel.cs
-using Engage.Models;
+using Engage.Helpers;
 using Engage.OpenAI;
 using Engage.OpenAI.Models;
 using Microsoft.Extensions.Logging;
