@@ -1,5 +1,6 @@
 // [FILE] Engage.Views.ChatPage.xaml.cs
-using Engage.ChatGPT;
+using System;
+using System.Diagnostics;
 using Engage.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -10,6 +11,7 @@ namespace Engage.Views
     public sealed partial class ChatPage : Page
     {
         private readonly ChatViewModel _viewModel;
+
         private int _tabCount = 0;
         private string _newMessageTextBoxValue;
 
@@ -18,6 +20,23 @@ namespace Engage.Views
             InitializeComponent();
             _viewModel = viewModel;
             DataContext = _viewModel;
+        }
+
+        private void ScrollToBottom()
+        {
+            ChatScrollViewer.ChangeView(null, ChatScrollViewer.ScrollableHeight, null);
+        }
+
+        private void NewMessageTextBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(NewMessageTextBox.Text))
+            {
+                MessageSendButton.IsEnabled = false;
+            }
+            else
+            {
+                MessageSendButton.IsEnabled = true;
+            }
         }
 
         private void ChatTabView_AddTabButtonClick(TabView sender, object args)
@@ -42,16 +61,32 @@ namespace Engage.Views
             }
         }
 
-        private void NewMessageTextBox_SelectionChanged(object sender, RoutedEventArgs e)
+        private void ChatTabView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (string.IsNullOrEmpty(NewMessageTextBox.Text))
+            if (e.RemovedItems.Count > 0)
             {
-                MessageSendButton.IsEnabled = false;
+                var oldTab = e.RemovedItems[0] as ChatTabViewModel;
+                oldTab.MessageSent -= OnMessageSent;
+                Debug.WriteLine("Unsubscribed from MessageSent event for oldTab");
             }
-            else
+
+            if (e.AddedItems.Count > 0)
             {
-                MessageSendButton.IsEnabled = true;
+                var newTab = e.AddedItems[0] as ChatTabViewModel;
+                newTab.MessageSent += OnMessageSent;
+                Debug.WriteLine("Subscribed to MessageSent event for newTab");
             }
+        }
+
+        private void OnMessageSent(object sender, EventArgs e)
+        {
+            Debug.WriteLine("OnMessageSent called");
+            ScrollToBottom();
+        }
+
+        private void ScrollToBottomButton_Click(object sender, RoutedEventArgs e)
+        {
+            ScrollToBottom();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
