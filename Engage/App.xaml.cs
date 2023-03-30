@@ -1,5 +1,5 @@
 ﻿// Engage.App.xaml.cs
-using Engage.ChatGPT;
+using Engage.OpenAI;
 using Engage.Helpers;
 using Engage.ViewModels;
 using Engage.Views;

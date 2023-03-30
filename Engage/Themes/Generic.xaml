@@ -1,7 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Engage.Themes">
+    xmlns:local="using:Engage.Views.Controls">
 
+    <Style xmlns:local2="using:Engage.Views.Controls" TargetType="local:Alert">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local2:Alert">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

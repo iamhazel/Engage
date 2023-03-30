@@ -1,8 +1,8 @@
-﻿// [FILE] Engage.ChatGPT.IIIChatService.cs
+﻿// [FILE] Engage.OpenAI.IIIChatService.cs
 using System.Threading.Tasks;
-using Engage.ChatGPT.Models;
+using Engage.OpenAI.Models;
 
-namespace Engage.ChatGPT
+namespace Engage.OpenAI
 {
     public interface IChatService
     {

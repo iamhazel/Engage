@@ -2,9 +2,8 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Engage.ChatGPT;
-using Engage.Models;
-using Microsoft.Extensions.Logging;
+using Engage.OpenAI;
+using Engage.Helpers;
 
 namespace Engage.ViewModels
 {

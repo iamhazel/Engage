@@ -1,12 +1,13 @@
 // Engage.Views.MainWindow.xaml.cs
 using System;
 using System.Diagnostics;
-using Engage.ChatGPT;
+using Engage.OpenAI;
 using Engage.Helpers;
 using Engage.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using Engage.Views.Controls;
 
 namespace Engage.Views
 {
@@ -78,6 +79,11 @@ namespace Engage.Views
                     throw;
                 }
             }
+        }
+
+        private void DevSendAlert_Click(object sender, RoutedEventArgs e)
+        {
+            AlertManager.RaiseShowAlertEvent(sender);
         }
     }
 }

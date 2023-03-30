@@ -1,8 +1,10 @@
 ﻿// [FILE] Engage.ViewModels.ChatTabViewModel.cs
-using Engage.ChatGPT;
-using Engage.ChatGPT.Models;
-using Engage.Models;
+using Engage.Helpers;
+using Engage.OpenAI;
+using Engage.OpenAI.Models;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -18,7 +20,6 @@ namespace Engage.ViewModels
         private readonly IChatService _chatService;
         public ICommand SendMessageCommand { get; set; }
         public IChatService ChatService { get; set; }
-
         // Models
         public CustomRelayCommand ToggleMessageSendingCommand { get; }
         private ObservableCollection<MessageViewModel> _messages;
@@ -28,7 +29,7 @@ namespace Engage.ViewModels
             set => SetProperty(ref _messages, value);
         }
 
-        // Variables
+        // Properties
         private string _message;
         public string Message
         {
@@ -77,6 +78,12 @@ namespace Engage.ViewModels
             }
         }
 
+        private bool _isSelected;
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set => SetProperty(ref _isSelected, value);
+        }
 
         // Methods
         public ChatTabViewModel(IChatService service, string tabName)
@@ -92,7 +99,8 @@ namespace Engage.ViewModels
             Messages.Clear();
         }
 
-        // Existing SendMessageAsync method
+        public event EventHandler MessageSent;
+
         private async Task SendMessageAsync()
         {
             if (string.IsNullOrWhiteSpace(NewMessageText))
@@ -111,9 +119,9 @@ namespace Engage.ViewModels
             if (SelectedRole != "assistant")
             {
                 var messages = new List<Message>
-        {
-            new Message { Content = "You are a helpful assistant.", Role = "system" }
-        };
+                {
+                    new Message { Content = "You are a helpful assistant.", Role = "system" }
+                };
 
                 // Add previous messages to the list
                 foreach (var messageViewModel in Messages)
@@ -126,13 +134,12 @@ namespace Engage.ViewModels
 
                 if (response != null)
                 {
-                var assistantMessageViewModel = new MessageViewModel(new Message { Content = response.Content, Role = "assistant" }, ChatMessageType.Received);
+                    var assistantMessageViewModel = new MessageViewModel(new Message { Content = response.Content, Role = "assistant" }, ChatMessageType.Received);
                     Messages.Add(assistantMessageViewModel);
                 }
             }
+            MessageSent?.Invoke(this, EventArgs.Empty);
         }
-
-
-
     }
+
 }

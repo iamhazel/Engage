@@ -1,23 +1,31 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Engage.App.xaml -->
+<?xml version="1.0" encoding="utf-8" ?>
+<!--  Engage.App.xaml  -->
 <Application
     x:Class="Engage.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Engage"
-    xmlns:converters="using:Engage.Converters">
+    xmlns:converters="using:Engage.Converters"
+    xmlns:local="using:Engage">
+    
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
-                <!-- Other merged dictionaries here -->
+                <!--  Other merged dictionaries here  -->
             </ResourceDictionary.MergedDictionaries>
-            <!-- Other app resources here -->
+            <!--  Other app resources here  -->
             <converters:RoleToAlignmentConverter x:Key="RoleToAlignmentConverter" />
             <converters:StringToTitleCaseConverter x:Key="StringToTitleCaseConverter" />
             <converters:UnixTimestampConverter x:Key="UnixTimestampConverter" />
             <converters:ChatMessageTypeToBackgroundColorConverter x:Key="ChatMessageTypeToBackgroundColorConverter" />
             <converters:ChatMessageTypeToForegroundColorConverter x:Key="ChatMessageTypeToForegroundColorConverter" />
+            <!--  Styles  -->
+            <SolidColorBrush x:Key="WindowCaptionBackground">
+                Transparent
+            </SolidColorBrush>
+            <SolidColorBrush x:Key="WindowCaptionBackgroundDisabled">
+                Transparent
+            </SolidColorBrush>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -1,5 +1,5 @@
-﻿// [FILE] Engage.ChatGPT.Models.Usage.cs
-namespace Engage.ChatGPT.Models
+﻿// [FILE] Engage.OpenAI.Models.Usage.cs
+namespace Engage.OpenAI.Models
 {
     public class Choice
     {
