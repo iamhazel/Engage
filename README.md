@@ -1,6 +1,6 @@
 # Engage for Windows
 
-Engage is a personal project for learning WinAppSDK, WinUI3, and Windows development in general. Currently, the app allows the user to select a GPT model to chat with. The goal of this project is to create a fully functional chat application using WinAppSDK and WinUI3.
+Engage is a personal project for learning WinAppSDK, WinUI3, and Windows development in general. I'll likely just keep adding tabs for random features / things I want to try. Or it may end up going in some as-of-yet unknown direction, who knows! 😍
 
 ## Current Features
 
