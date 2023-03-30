@@ -1,10 +1,10 @@
-﻿// [FILE] Engage.ChatGPT.IService.cs
+﻿// [FILE] Engage.ChatGPT.IIIChatService.cs
 using System.Threading.Tasks;
 using Engage.ChatGPT.Models;
 
 namespace Engage.ChatGPT
 {
-    public interface IService
+    public interface IChatService
     {
         Task<Message> SendMessageAsync(ApiRequestOptions requestOptions);
     }

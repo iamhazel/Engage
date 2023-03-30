@@ -2,35 +2,74 @@
 using Engage.ChatGPT;
 using Engage.ViewModels;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Input;
 using Microsoft.UI.Xaml.Controls;
-using Windows.UI.Core;
-using Windows.System;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Navigation;
 
 namespace Engage.Views
 {
     public sealed partial class ChatPage : Page
     {
-        public ChatViewModel ViewModel => (ChatViewModel)DataContext;
+        private readonly ChatViewModel _viewModel;
+        private int _tabCount = 0;
+        private string _newMessageTextBoxValue;
 
-        public DependencyObject ChatBorder { get; private set; }
-
-        public ChatPage(IService chatService)
+        public ChatPage(ChatViewModel viewModel)
         {
             InitializeComponent();
-            DataContext = ((App)Application.Current).ChatViewModel;
-            ViewModel.ChatService = chatService; // Pass the IService instance to the ChatViewModel
-            MessageTypeComboBox.SelectionChanged += MessageTypeComboBox_SelectionChanged;
+            _viewModel = viewModel;
+            DataContext = _viewModel;
         }
 
-        private void MessageTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ChatTabView_AddTabButtonClick(TabView sender, object args)
         {
-            if (ViewModel != null)
+            _viewModel.AddTab();
+        }
+
+        private void ChatTabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+        {
+            _viewModel.CloseTab(args.Item as ChatTabViewModel);
+        }
+
+        private void RoleSelectionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (RoleSelectionComboBox.SelectedIndex == 1)
             {
-                ViewModel.InputMessageSource = MessageTypeComboBox.SelectedIndex == 0 ? "user" : "assistant";
+                ModelSelectionComboBox.IsEnabled = false;
             }
+            else
+            {
+                ModelSelectionComboBox.IsEnabled = true;
+            }
+        }
+
+        private void NewMessageTextBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(NewMessageTextBox.Text))
+            {
+                MessageSendButton.IsEnabled = false;
+            }
+            else
+            {
+                MessageSendButton.IsEnabled = true;
+            }
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            _newMessageTextBoxValue = NewMessageTextBox.Text;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            NewMessageTextBox.Text = _newMessageTextBoxValue;
+        }
+
+        private void TabClearMessages_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedTab = ChatTabView.SelectedItem as ChatTabViewModel;
+            selectedTab?.ClearMessages();
         }
     }
 }
