@@ -13,14 +13,15 @@ using System.IO;
 public static class DependencyInjection
 {
     // Extension method for adding application services to the service collection
-    public static void AddApplicationServices(this IServiceCollection services)
+    public static void AddApplicationServices(this ServiceCollection services)
     {
         // Add the ApiClient and Service objects to the service collection as singletons
         services.AddSingleton<IApiClient, ApiClient>();
-        services.AddSingleton<IService, Service>();
+        services.AddSingleton<IChatService, ChatService>();
 
         // Add the ChatViewModel and SettingsViewModel objects to the service collection as transient
         services.AddTransient<ChatViewModel>();
+        services.AddTransient<ChatTabViewModel>();
         services.AddTransient<SettingsViewModel>();
 
         // Add the MainWindow object to the service collection as a singleton
