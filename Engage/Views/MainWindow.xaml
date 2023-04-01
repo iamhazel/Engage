@@ -14,6 +14,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <!--  Empty nav pane  -->
         <NavigationView
             Grid.Row="0"
             IsBackButtonVisible="Collapsed"
@@ -21,6 +22,7 @@
             IsSettingsVisible="False"
             PaneDisplayMode="Top" />
 
+        <!--  Title bar  -->
         <Grid Grid.Row="0" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -53,9 +55,9 @@
                     <MenuBarItem Title="Developer">
                         <MenuFlyoutSubItem Text="Events">
                             <MenuFlyoutItem
-                                x:Name="DevSendAlert"
-                                Click="DevSendAlert_Click"
-                                Text="Send Alert" />
+                                x:Name="DevSendSignal"
+                                Click="DevSendSignal_Click"
+                                Text="Send Signal" />
                         </MenuFlyoutSubItem>
                         <MenuFlyoutSeparator />
                         <MenuFlyoutItem Text="Contribute" />
@@ -72,6 +74,7 @@
                 QueryIcon="Find" />
         </Grid>
 
+        <!--  Main nav menu and content area  -->
         <NavigationView
             x:Name="MainNavigationView"
             Grid.Row="1"
@@ -84,6 +87,7 @@
             SelectionChanged="MainNavigationView_SelectionChanged"
             ShoulderNavigationEnabled="Always">
 
+            <!--  nav menu items  -->
             <NavigationView.MenuItems>
                 <NavigationViewItem
                     Content="Home"
@@ -93,11 +97,29 @@
                     Content="Chat"
                     Icon="Comment"
                     Tag="Chat" />
+                <NavigationViewItem
+                    Content="Layouts"
+                    Icon="OpenPane"
+                    Tag="Layouts" />
             </NavigationView.MenuItems>
 
-            <Frame x:Name="MainFrame" />
+            <StackPanel Orientation="Vertical">
+                <!--  Signals banner  -->
+                <Frame
+                    x:Name="GlobalSignalContainer"
+                    Height="Auto"
+                    HorizontalAlignment="Stretch" />
+
+                <!--  Body content  -->
+                <Frame
+                    x:Name="MainFrame"
+                    Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch" />
+            </StackPanel>
         </NavigationView>
 
+        <!--  System caption controls  -->
         <Grid
             x:Name="AppTitleBar"
             Width="128"
@@ -107,5 +129,4 @@
     </Grid>
 
 </Window>
-
 

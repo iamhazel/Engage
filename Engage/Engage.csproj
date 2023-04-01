@@ -13,8 +13,10 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Views\ChatPage.xaml" />
-    <None Remove="Views\Controls\Alert.xaml" />
+    <None Remove="Views\Controls\Signal.xaml" />
     <None Remove="Views\HomePage.xaml" />
+    <None Remove="Views\LayoutsPage.xaml" />
+    <None Remove="Views\Layouts\MainWindowLayout.xaml" />
     <None Remove="Views\MainWindow.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
   </ItemGroup>
@@ -58,6 +60,11 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Views\LayoutsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -78,7 +85,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\Controls\Alert.xaml">
+    <Page Update="Views\Controls\Signal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Layouts\MainWindowLayout.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
