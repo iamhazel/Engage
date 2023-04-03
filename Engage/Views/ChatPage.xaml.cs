@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Engage.Helpers;
 using Engage.ViewModels;
+using Engage.Views.Controls;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -13,26 +15,24 @@ namespace Engage.Views
     public sealed partial class ChatPage : Page
     {
         private readonly ChatViewModel _viewModel;
-
-        private int _tabCount = 0;
+        private readonly Frame _signalFrame;
+        private readonly SignalManager _signalManager;
         private string _newMessageTextBoxValue;
 
-        public ChatPage(ChatViewModel viewModel)
+        // Inject MainWindow into the ChatPage constructor
+        public ChatPage(ChatViewModel viewModel, MainWindow mainWindow)
         {
             InitializeComponent();
             _viewModel = viewModel;
-            AlertManager.ShowAlertEvent += OnAlertManagerShowAlert;
             DataContext = _viewModel;
+
+            _signalFrame = mainWindow.PublicSignalContainer;
+            _signalManager = (Application.Current as App).ServiceProvider.GetService<SignalManager>();
         }
 
-        private void OnAlertManagerShowAlert(object sender, EventArgs e)
+        private void OnSignalManagerShowSignal(object sender, EventArgs e)
         {
-            var properties = new Dictionary<DependencyProperty, int>
-            {
-                { Grid.RowProperty, 1 },
-                { Grid.ColumnProperty, 0 },
-            };
-            AlertManager.OnShowAlert(sender, e, MainGrid, properties);
+            _signalManager.ShowSignal("Title", "Message", Signal.SignalType.Success);
         }
 
         private void ScrollToBottom()
@@ -40,7 +40,7 @@ namespace Engage.Views
             ChatScrollViewer.ChangeView(null, ChatScrollViewer.ScrollableHeight, null);
         }
 
-        private void NewMessageTextBox_SelectionChanged(object sender, RoutedEventArgs e         )
+        private void NewMessageTextBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(NewMessageTextBox.Text))
             {
@@ -107,7 +107,6 @@ namespace Engage.Views
         {
             base.OnNavigatedFrom(e);
             _newMessageTextBoxValue = NewMessageTextBox.Text;
-            AlertManager.ShowAlertEvent -= OnAlertManagerShowAlert;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

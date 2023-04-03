@@ -1,51 +1,42 @@
 // Engage.Views.MainWindow.xaml.cs
 using System;
 using System.Diagnostics;
-using Engage.OpenAI;
-using Engage.Helpers;
 using Engage.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 using Engage.Views.Controls;
+using Microsoft.UI.Xaml.Media;
+using Engage.Helpers;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Engage.Views
 {
     public sealed partial class MainWindow : Window
     {
-        private readonly IChatService _chatService;
-        private readonly SettingsViewModel _settingsViewModel;
-        private ILocalSettingsService _localSettingService;
-        private readonly ChatViewModel _chatViewModel; // Add this line
+        private readonly IServiceProvider _serviceProvider;
+        private readonly SignalManager _signalManager;
+        public Frame PublicSignalContainer => GlobalSignalContainer;
 
-        public MainWindow(IApiClient apiClient, SettingsViewModel settingsViewModel)
+        public MainWindow(IServiceProvider serviceProvider)
         {
-            try
-            {
-                InitializeComponent();
-                MainFrame.Content = new HomePage();
+            InitializeComponent();
 
-                this.SystemBackdrop = new MicaBackdrop();
-                this.ExtendsContentIntoTitleBar = true;
-                this.SetTitleBar(AppTitleBar);
+            _serviceProvider = serviceProvider;
+            _signalManager = serviceProvider.GetService<SignalManager>();
+            MainFrame.Content = new HomePage();
 
-                _chatService = new ChatService(apiClient);
-                _settingsViewModel = settingsViewModel;
+            this.SystemBackdrop = new MicaBackdrop();
+            this.ExtendsContentIntoTitleBar = true;
+            this.SetTitleBar(AppTitleBar);
 
-                _chatViewModel = new ChatViewModel(_chatService); // Initialize the ChatViewModel instance
-
-                MainNavigationView.SelectionChanged += MainNavigationView_SelectionChanged;
-                MainNavigationView.ItemInvoked += MainNavigationView_SettingsInvoked;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Error initializing main window: {ex}");
-                throw;
-            }
+            MainNavigationView.SelectionChanged += MainNavigationView_SelectionChanged;
+            MainNavigationView.ItemInvoked += MainNavigationView_SettingsInvoked;
         }
 
         private void MainNavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
+            var app = Application.Current as App;
+
             if (args.SelectedItem is NavigationViewItem item)
             {
                 string selectedItemTag = item.Tag.ToString();
@@ -57,7 +48,11 @@ namespace Engage.Views
                         MainNavigationView.SelectedItem = null;
                         break;
                     case "Chat":
-                        MainFrame.Content = new ChatPage(_chatViewModel); // Pass the ChatViewModel instance
+                        MainFrame.Content = new ChatPage(app.ChatViewModel, this); // Pass 'this' as the second argument
+                        MainNavigationView.SelectedItem = null;
+                        break;
+                    case "Layouts":
+                        MainFrame.Content = new LayoutsPage(); // Pass 'this' as the second argument
                         MainNavigationView.SelectedItem = null;
                         break;
                 }
@@ -66,24 +61,24 @@ namespace Engage.Views
 
         private void MainNavigationView_SettingsInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
+            var app = Application.Current as App;
+
             if (args.IsSettingsInvoked)
             {
-                try
-                {
-                    MainFrame.Content = new SettingsPage(_settingsViewModel, _localSettingService);
-                    MainNavigationView.SelectedItem = null;
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"Error loading settings page: {ex}");
-                    throw;
-                }
+                MainFrame.Content = new SettingsPage(app.SettingsViewModel, app.LocalSettingService);
+                MainNavigationView.SelectedItem = null;
             }
         }
 
-        private void DevSendAlert_Click(object sender, RoutedEventArgs e)
+        private void DevSendSignal_Click(object sender, RoutedEventArgs e)
         {
-            AlertManager.RaiseShowAlertEvent(sender);
+            // get an instance of IServiceProvider from the app's service provider
+            var serviceProvider = (Application.Current as App).ServiceProvider;
+            var signalManager = serviceProvider.GetService<SignalManager>();
+
+            // use the signal manager to show a signal
+            signalManager.ShowSignal("Title", "Message", Signal.SignalType.Success);
+
         }
     }
 }
