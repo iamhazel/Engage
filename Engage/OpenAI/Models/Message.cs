@@ -1,7 +1,7 @@
-﻿// [FILE] Engage.ChatGPT.Models.Message.cs
+﻿// [FILE] Engage.OpenAI.Models.Message.cs
 using System.Text.Json.Serialization;
 
-namespace Engage.ChatGPT.Models
+namespace Engage.OpenAI.Models
 {
     public class Message
     {

@@ -1,6 +1,6 @@
 ﻿// Engage.DependencyInjection.cs
 using Engage;
-using Engage.ChatGPT;
+using Engage.OpenAI;
 using Engage.ViewModels;
 using Engage.Views;
 using Engage.Helpers;
@@ -9,24 +9,24 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
 
 public static class DependencyInjection
 {
     // Extension method for adding application services to the service collection
-    public static void AddApplicationServices(this IServiceCollection services)
+    public static void AddApplicationServices(this ServiceCollection services)
     {
-        // Add the ApiClient and Service objects to the service collection as singletons
-        services.AddSingleton<IApiClient, ApiClient>();
-        services.AddSingleton<IService, Service>();
-
-        // Add the ChatViewModel and SettingsViewModel objects to the service collection as transient
-        services.AddTransient<ChatViewModel>();
-        services.AddTransient<SettingsViewModel>();
-
-        // Add the MainWindow object to the service collection as a singleton
         services.AddSingleton<MainWindow>();
+        services.AddSingleton<Func<Frame>>(sp => () => ((MainWindow)sp.GetService<MainWindow>()).PublicSignalContainer);
 
-        // Add the HttpClient and logging services to the service collection
+        services.AddTransient<SettingsViewModel>();
+        services.AddTransient<ChatViewModel>();
+        services.AddTransient<ChatTabViewModel>();
+        services.AddSingleton<SignalManager>();
+
+        services.AddSingleton<IChatService, ChatService>();
+        services.AddSingleton<IApiClient, ApiClient>();
         services.AddHttpClient<IApiClient, ApiClient>(client =>
         {
             client.BaseAddress = new Uri("https://api.openai.com/v1/");
@@ -34,10 +34,8 @@ public static class DependencyInjection
         services.AddLogging(builder =>
         {
             builder.AddConsole();
-            builder.SetMinimumLevel(LogLevel.Information); // Make sure this is LogLevel.Information or lower
+            builder.SetMinimumLevel(LogLevel.Information);
         });
-
-        // Add helper services
         services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
     }
 }

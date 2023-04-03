@@ -1,109 +1,84 @@
 // Engage.Views.MainWindow.xaml.cs
-using Engage.ChatGPT;
-using Engage.Helpers;
-using Engage.ViewModels;
-using Microsoft.UI.Windowing;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using System;
 using System.Diagnostics;
-using Windows.Foundation;
-using Windows.UI.Core;
+using Engage.ViewModels;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Engage.Views.Controls;
+using Microsoft.UI.Xaml.Media;
+using Engage.Helpers;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Engage.Views
 {
-    // This is the code-behind for the main window of the application
     public sealed partial class MainWindow : Window
     {
-        // Private fields for the chat service and settings view model
-        private readonly IService _chatGPTService;
-        private readonly SettingsViewModel _settingsViewModel;
-        private ILocalSettingsService _localSettingService;
+        private readonly IServiceProvider _serviceProvider;
+        private readonly SignalManager _signalManager;
+        public Frame PublicSignalContainer => GlobalSignalContainer;
 
-        // Constructor that takes an IApiClient and SettingsViewModel
-        public MainWindow(IApiClient apiClient, SettingsViewModel settingsViewModel)
+        public MainWindow(IServiceProvider serviceProvider)
         {
-            try
-            {
-                // Initialize window and set main content to home page
-                InitializeComponent();
-                MainFrame.Content = new HomePage();
+            InitializeComponent();
 
-                // Set up title bar
-                this.SystemBackdrop = new MicaBackdrop();
-                this.ExtendsContentIntoTitleBar = true;
-                this.SetTitleBar(AppTitleBar);
+            _serviceProvider = serviceProvider;
+            _signalManager = serviceProvider.GetService<SignalManager>();
+            MainFrame.Content = new HomePage();
 
-                // Initialize chat service using the provided API client
-                _chatGPTService = new Service(apiClient);
+            this.SystemBackdrop = new MicaBackdrop();
+            this.ExtendsContentIntoTitleBar = true;
+            this.SetTitleBar(AppTitleBar);
 
-                // Store the injected SettingsViewModel
-                _settingsViewModel = settingsViewModel;
-
-                // Register event handlers for navigation view
-                MainNavigationView.SelectionChanged += MainNavigationView_SelectionChanged;
-                MainNavigationView.ItemInvoked += MainNavigationView_SettingsInvoked;
-            }
-            catch (Exception ex)
-            {
-                // Handle any exceptions that occur during initialization
-                Debug.WriteLine($"Error initializing main window: {ex}");
-                throw;
-            }
+            MainNavigationView.SelectionChanged += MainNavigationView_SelectionChanged;
+            MainNavigationView.ItemInvoked += MainNavigationView_SettingsInvoked;
         }
 
-        // Event handler for when a new item is selected in the main navigation view
         private void MainNavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            try
-            {
-                // Get the selected item, extract its tag property, and store it in a string variable
-                if (args.SelectedItem is NavigationViewItem item)
-                {
-                    string selectedItemTag = item.Tag.ToString();
+            var app = Application.Current as App;
 
-                    // Show the appropriate page based on the selected item tag
-                    switch (selectedItemTag)
-                    {
-                        case "Home":
-                            MainFrame.Content = new HomePage();
-                            MainNavigationView.SelectedItem = null;
-                            break;
-                        case "Chat":
-                            MainFrame.Content = new ChatPage(_chatGPTService);
-                            MainNavigationView.SelectedItem = null;
-                            break;
-                    }
-                }
-            }
-            catch (Exception ex)
+            if (args.SelectedItem is NavigationViewItem item)
             {
-                // Handle any exceptions that occur during page navigation
-                Debug.WriteLine($"Error changing main navigation selection: {ex}");
-                throw;
+                string selectedItemTag = item.Tag.ToString();
+
+                switch (selectedItemTag)
+                {
+                    case "Home":
+                        MainFrame.Content = new HomePage();
+                        MainNavigationView.SelectedItem = null;
+                        break;
+                    case "Chat":
+                        MainFrame.Content = new ChatPage(app.ChatViewModel, this); // Pass 'this' as the second argument
+                        MainNavigationView.SelectedItem = null;
+                        break;
+                    case "Layouts":
+                        MainFrame.Content = new LayoutsPage(); // Pass 'this' as the second argument
+                        MainNavigationView.SelectedItem = null;
+                        break;
+                }
             }
         }
 
-        // Event handler for when the settings button is clicked in the main navigation view
         private void MainNavigationView_SettingsInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
+            var app = Application.Current as App;
+
             if (args.IsSettingsInvoked)
             {
-                try
-                {
-                    // Show the settings page, passing in the settings view model
-                    MainFrame.Content = new SettingsPage(_settingsViewModel, _localSettingService);
-                    MainNavigationView.SelectedItem = null;
-                }
-                catch (Exception ex)
-                {
-                    // Handle any exceptions that occur during page navigation
-                    Debug.WriteLine($"Error loading settings page: {ex}");
-                    throw;
-                }
+                MainFrame.Content = new SettingsPage(app.SettingsViewModel, app.LocalSettingService);
+                MainNavigationView.SelectedItem = null;
             }
+        }
+
+        private void DevSendSignal_Click(object sender, RoutedEventArgs e)
+        {
+            // get an instance of IServiceProvider from the app's service provider
+            var serviceProvider = (Application.Current as App).ServiceProvider;
+            var signalManager = serviceProvider.GetService<SignalManager>();
+
+            // use the signal manager to show a signal
+            signalManager.ShowSignal("Title", "Message", Signal.SignalType.Success);
+
         }
     }
 }

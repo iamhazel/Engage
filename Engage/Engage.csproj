@@ -13,7 +13,10 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Views\ChatPage.xaml" />
+    <None Remove="Views\Controls\Signal.xaml" />
     <None Remove="Views\HomePage.xaml" />
+    <None Remove="Views\LayoutsPage.xaml" />
+    <None Remove="Views\Layouts\MainWindowLayout.xaml" />
     <None Remove="Views\MainWindow.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
   </ItemGroup>
@@ -40,6 +43,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0-preview.2.23128.3" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230228005-preview1" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.25314-preview" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
     <PackageReference Include="RestSharp" Version="109.0.1" />
@@ -54,6 +58,11 @@
   -->
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\LayoutsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\MainWindow.xaml">
@@ -72,6 +81,16 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Controls\Signal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Layouts\MainWindowLayout.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

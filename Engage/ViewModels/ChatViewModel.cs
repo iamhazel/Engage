@@ -1,106 +1,65 @@
 ﻿// [FILE] Engage.ViewModels.ChatViewModel.cs
-using Engage.ChatGPT;
-using Engage.ChatGPT.Models;
-using Engage.Models;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
+using System;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+using System.ComponentModel;
+using Engage.OpenAI;
+using Engage.Helpers;
 
 namespace Engage.ViewModels
 {
-    public class ChatViewModel : BaseViewModel
+    public class ChatViewModel : BaseViewModel, INotifyPropertyChanged
     {
-        private readonly IApiClient _apiClient;
-        private readonly ILogger<ChatViewModel> _logger;
+        private readonly IChatService _chatService;
 
-        private string _message;
-        private string _inputMessageSource = "user";
-        private bool _isSendingMessage;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public RelayCommand<object> SendMessageCommand { get; }
-        public RelayCommand<object> ToggleSendingCommand { get; }
-        public IService ChatService { get; set; }
-
-        public string Message
+        private int _selectedTabIndex;
+        public int SelectedTabIndex
         {
-            get => _message;
-            set => SetProperty(ref _message, value);
-        }
-
-        public string InputMessageSource
-        {
-            get => _inputMessageSource;
-            set => SetProperty(ref _inputMessageSource, value);
-        }
-
-        public bool IsSendingMessage
-        {
-            get => _isSendingMessage;
-            set => SetProperty(ref _isSendingMessage, value);
-        }
-
-        private int _selectedModelIndex = 1;
-        public int SelectedModelIndex
-        {
-            get => _selectedModelIndex;
-            set => SetProperty(ref _selectedModelIndex, value);
-        }
-        public string SelectedModel => SelectedModelIndex == 0 ? "gpt-4" : "gpt-3.5-turbo";
-
-        private string _newMessageText;
-        public string NewMessageText
-        {
-            get => _newMessageText;
-            set => SetProperty(ref _newMessageText, value);
-        }
-
-        private ObservableCollection<MessageViewModel> _messages;
-        public ObservableCollection<MessageViewModel> Messages
-        {
-            get => _messages;
-            set => SetProperty(ref _messages, value);
-        }
-
-        public ChatViewModel(IApiClient apiClient, ILogger<ChatViewModel> logger)
-        {
-            _apiClient = apiClient;
-            _logger = logger;
-
-            SendMessageCommand = new RelayCommand<object>(async param => await SendMessageAsync(), param => !IsSendingMessage);
-
-            Messages = new ObservableCollection<MessageViewModel>();
-        }
-
-        private async Task SendMessageAsync()
-        {
-            ChatMessageType chatMessageType = InputMessageSource == "assistant" ? ChatMessageType.Received : ChatMessageType.Sent;
-
-            var userMessage = new Message { Content = NewMessageText, Role = InputMessageSource == "assistant" ? "assistant" : "user" };
-            var userMessageViewModel = new MessageViewModel(userMessage, chatMessageType);
-            Messages.Add(userMessageViewModel);
-
-            NewMessageText = string.Empty;
-
-            // AI chat message
-            if (InputMessageSource != "assistant")
+            get => _selectedTabIndex;
+            set
             {
-                var initialSystemMessage = new Message { Role = "system", Content = "You are a helpful assistant." };
-                var messages = new List<Message> { initialSystemMessage };
-
-                // Add previous messages to the list
-                foreach (var messageViewModel in Messages)
-                {
-                    messages.Add(new Message { Content = messageViewModel.Content, Role = messageViewModel.Role });
-                }
-
-                var requestOptions = new ApiRequestOptions { Model = SelectedModel, Messages = messages };
-                var response = await _apiClient.SendMessageAsync(requestOptions);
-                var assistantMessage = new MessageViewModel(new Message { Content = response.Choices[0].Message.Content, Role = "assistant" }, ChatMessageType.Received);
-                Messages.Add(assistantMessage);
+                _selectedTabIndex = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedTabIndex)));
             }
-            NewMessageText = string.Empty;
         }
 
+        public CustomRelayCommand AddTabCommand { get; }
+        public CustomRelayCommand CloseTabCommand { get; }
+
+        private ObservableCollection<ChatTabViewModel> _tabs = new ObservableCollection<ChatTabViewModel>();
+        public ObservableCollection<ChatTabViewModel> Tabs
+        {
+            get => _tabs;
+            set
+            {
+                _tabs = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tabs)));
+            }
+        }
+
+        // MessageTypeComboBox
+
+        public ChatViewModel(IChatService chatService)
+        {
+            _chatService = chatService ?? throw new ArgumentNullException(nameof(chatService));
+
+            AddTab();
+        }
+
+        public void AddTab()
+        {
+            var tab = new ChatTabViewModel(_chatService, $"Tab {Tabs.Count + 1}");
+            Tabs.Add(tab);
+            SelectedTabIndex = Tabs.Count - 1;
+        }
+
+        public void CloseTab(object tabObj)
+        {
+            if (tabObj is ChatTabViewModel tab)
+            {
+                Tabs.Remove(tab);
+            }
+        }
     }
 }

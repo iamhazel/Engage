@@ -26,18 +26,23 @@ namespace Engage.Views
             // Save the new API key and close the flyout
             string newApiKey = NewApiKeyTextBox.Text.Trim();
 
-            if (!string.IsNullOrEmpty(newApiKey))
+            if (ConfirmSaveToggle.IsOn)
             {
-                _settingsViewModel.SaveApiKey(newApiKey);
+                SaveAPIKeyButton.IsEnabled = true;
 
-                // Close the Flyout
-                if (UpdateApiKeyButton.Flyout is Flyout flyout)
+                if (!string.IsNullOrEmpty(newApiKey))
                 {
-                    flyout.Hide();
-                }
+                    _settingsViewModel.SaveApiKey(newApiKey);
 
-                // Update the display field with the newly saved API key
-                ApiKeyTextBlock.Text = _settingsViewModel.ApiKey;
+                    // Close the Flyout
+                    if (UpdateApiKeyButton.Flyout is Flyout flyout)
+                    {
+                        flyout.Hide();
+                    }
+
+                    // Update the display field with the newly saved API key
+                    ApiKeyTextBlock.Text = _settingsViewModel.ApiKey;
+                }
             }
         }
 

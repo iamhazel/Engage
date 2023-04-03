@@ -1,6 +1,8 @@
-<Window x:Class="Engage.Views.MainWindow"
+<!--  Engage.Views.MainWindow.xaml  -->
+<Window
+    x:Class="Engage.Views.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -12,13 +14,15 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <NavigationView PaneDisplayMode="Top"
-                            IsPaneOpen="False"
-                            IsBackButtonVisible="Collapsed"
-                            IsSettingsVisible="False"
-                            Grid.Row="0">
-        </NavigationView>
+        <!--  Empty nav pane  -->
+        <NavigationView
+            Grid.Row="0"
+            IsBackButtonVisible="Collapsed"
+            IsPaneOpen="False"
+            IsSettingsVisible="False"
+            PaneDisplayMode="Top" />
 
+        <!--  Title bar  -->
         <Grid Grid.Row="0" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -27,45 +31,102 @@
                 <RowDefinition Height="48" />
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal" Grid.Column="1">
-                
-                <TextBlock x:Name="AppTitle" Text="Engage" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0" FontWeight="SemiBold" />
-                
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+
+                <TextBlock
+                    x:Name="AppTitle"
+                    Margin="20,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontWeight="SemiBold"
+                    Text="Engage" />
+
                 <MenuBar>
                     <MenuBarItem Title="File" />
+
                     <MenuBarItem Title="Edit" />
+
                     <MenuBarItem Title="View" />
-                    <MenuBarItem Title="Help" />
+
+                    <MenuBarItem Title="Help">
+                        <MenuFlyoutItem Text="About" />
+                    </MenuBarItem>
+
+                    <MenuBarItem Title="Developer">
+                        <MenuFlyoutSubItem Text="Events">
+                            <MenuFlyoutItem
+                                x:Name="DevSendSignal"
+                                Click="DevSendSignal_Click"
+                                Text="Send Signal" />
+                        </MenuFlyoutSubItem>
+                        <MenuFlyoutSeparator />
+                        <MenuFlyoutItem Text="Contribute" />
+                    </MenuBarItem>
                 </MenuBar>
             </StackPanel>
-            
-            <AutoSuggestBox PlaceholderText="Search" QueryIcon="Find" HorizontalAlignment="Center" VerticalAlignment="Center" Width="225" Height="32" />
+
+            <AutoSuggestBox
+                Width="225"
+                Height="32"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                PlaceholderText="Search"
+                QueryIcon="Find" />
         </Grid>
 
-        <NavigationView x:Name="MainNavigationView"
-                        Grid.Row="1"
-                        PaneDisplayMode="LeftCompact"
-                        IsPaneOpen="False"
-                        IsBackButtonVisible="Collapsed"
-                        SelectionChanged="MainNavigationView_SelectionChanged"
-                        IsTabStop="True"
-                        IsSettingsVisible="True"
-                        OpenPaneLength="200"
-                        ShoulderNavigationEnabled="Always" >
+        <!--  Main nav menu and content area  -->
+        <NavigationView
+            x:Name="MainNavigationView"
+            Grid.Row="1"
+            IsBackButtonVisible="Collapsed"
+            IsPaneOpen="False"
+            IsSettingsVisible="True"
+            IsTabStop="True"
+            OpenPaneLength="200"
+            PaneDisplayMode="LeftCompact"
+            SelectionChanged="MainNavigationView_SelectionChanged"
+            ShoulderNavigationEnabled="Always">
 
+            <!--  nav menu items  -->
             <NavigationView.MenuItems>
-                <NavigationViewItem Icon="Home" Content="Home" Tag="Home" />
-                <NavigationViewItem Icon="Comment" Content="Chat" Tag="Chat" />
+                <NavigationViewItem
+                    Content="Home"
+                    Icon="Home"
+                    Tag="Home" />
+                <NavigationViewItem
+                    Content="Chat"
+                    Icon="Comment"
+                    Tag="Chat" />
+                <NavigationViewItem
+                    Content="Layouts"
+                    Icon="OpenPane"
+                    Tag="Layouts" />
             </NavigationView.MenuItems>
 
-            <Frame x:Name="MainFrame" />
+            <StackPanel Orientation="Vertical">
+                <!--  Signals banner  -->
+                <Frame
+                    x:Name="GlobalSignalContainer"
+                    Height="Auto"
+                    HorizontalAlignment="Stretch" />
+
+                <!--  Body content  -->
+                <Frame
+                    x:Name="MainFrame"
+                    Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch" />
+            </StackPanel>
         </NavigationView>
 
-        <Grid x:Name="AppTitleBar" HorizontalAlignment="Right" Width="128" Height="48">
-        </Grid>
+        <!--  System caption controls  -->
+        <Grid
+            x:Name="AppTitleBar"
+            Width="128"
+            Height="48"
+            HorizontalAlignment="Right" />
 
     </Grid>
 
 </Window>
-    
-    
+

@@ -1,4 +1,4 @@
-using Engage.ChatGPT;
+using Engage.OpenAI;
 using Engage.ViewModels;
 using Microsoft.UI.Xaml.Controls;
 
