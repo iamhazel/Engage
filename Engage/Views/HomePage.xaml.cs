@@ -1,17 +1,11 @@
-using Engage.OpenAI;
-using Engage.ViewModels;
 using Microsoft.UI.Xaml.Controls;
 
-namespace Engage.Views
-{
-    public sealed partial class HomePage : Page
-    {
-        public HomePage()
-        {
-            var homePageViewModel = new HomeViewModel();
+namespace EngageV2.Views;
 
-            this.DataContext = homePageViewModel;
-            this.InitializeComponent();
-        }
+public sealed partial class HomePage : Page
+{
+    public HomePage()
+    {
+        this.InitializeComponent();
     }
 }

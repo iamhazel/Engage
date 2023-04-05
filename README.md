@@ -14,8 +14,9 @@ Engage currently includes the following features:
 ![Screenshot of Engage chat screen](Screenshots/chat-screen.png)
 
 ## Dependencies
-
-I don't really know, except I built it with Windows App SDK 1.2 and WinUI 3, while running Windows 11 Home Canary Build 25324. Sorry 😬
+- [Windows 11 SDK Build Tools v10.0.25330-preview](https://www.nuget.org/packages/Microsoft.Windows.SDK.BuildTools/10.0.25330-preview)
+- [WindowsAppSDK v1.3.2300228005-preview1](https://www.nuget.org/packages/Microsoft.WindowsAppSDK/1.3.230228005-preview1)
+- [.NET 6 SDK (v6.0.407)](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.407-windows-x64-installer)
 
 ## Getting Started
 

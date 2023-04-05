@@ -1,62 +1,50 @@
-<!--  Engage.Views.SettingsPage.xaml  -->
 <Page
-    x:Class="Engage.Views.SettingsPage"
+    x:Class="EngageV2.Views.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:EngageV2.Views.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="using:Engage.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:Name="SettingsPageRoot"
+    xmlns:vm="using:EngageV2.Views.Models"
     mc:Ignorable="d">
 
-    <StackPanel
-        Margin="30"
-        VerticalAlignment="Top"
-        Orientation="Horizontal">
-        <Button
-            x:Name="UpdateApiKeyButton"
-            Margin="10,0,20,0"
-            Content="Update">
-            <Button.Flyout>
-                <Flyout>
-                    <StackPanel Margin="10">
-                        <TextBlock
-                            Margin="0,0,0,10"
-                            FontSize="20"
-                            FontWeight="Bold"
-                            Text="Update API Key" />
-                        <TextBox
-                            x:Name="NewApiKeyTextBox"
-                            Margin="0,0,0,10"
-                            PlaceholderText="New API key" />
-                        <StackPanel Orientation="Horizontal">
-                            <ToggleSwitch
-                                x:Name="ConfirmSaveToggle"
-                                Margin="0,0,10,0"
-                                OffContent="Disabled"
-                                OnContent="Enabled" />
-                            <Button
-                                x:Name="SaveAPIKeyButton"
-                                Click="SaveButton_Click"
-                                Content="Save"
-                                IsEnabled="{Binding IsOn, ElementName=ConfirmSaveToggle}" />
-                        </StackPanel>
-                    </StackPanel>
-                </Flyout>
-            </Button.Flyout>
-        </Button>
-        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-            <TextBlock VerticalAlignment="Center" Text="OpenAI API Key: " />
-            <TextBlock
-                x:Name="ApiKeyTextBlock"
-                Margin="5,0"
-                VerticalAlignment="Center"
-                Text="{Binding ApiKey, Mode=OneWay}" />
-            <HyperlinkButton
-                x:Name="ApiKeyCopyButton"
-                Margin="5,0,0,0"
-                Click="ApiKeyCopy_Click"
-                Content="Copy" />
-        </StackPanel>
-    </StackPanel>
+    <Page.DataContext>
+        <vm:SettingsViewModel />
+    </Page.DataContext>
+
+    <Grid
+        x:Name="SettingsCardGrid"
+        Padding="20"
+        RowSpacing="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ItemsControl ItemsSource="{Binding SettingCards}" HorizontalAlignment="Stretch" Width="800">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:SettingsCardViewModel">
+                    <controls:SettingsCardControl
+                        CardTitle="{Binding CardTitle}"
+                        CardSubtitle="{Binding CardSubtitle}"
+                        CardBackground="{Binding CardBackground}"
+                        CardBorderBrush="{Binding CardBorderBrush}"
+                        CardCornerRadius="{Binding CardCornerRadius}"
+                        CardWidth="{Binding CardWidth}"
+                        ClickGlyph="{Binding ClickGlyph}"
+                        IconFontSize="{Binding IconFontSize}"
+                        IconGlyph="{Binding IconGlyph}"
+                        ToggleSwitchIsEnabled="{Binding ToggleSwitchIsEnabled}"
+                        ToggleSwitchMargin="{Binding ToggleSwitchMargin}"
+                        ToggleSwitchOffContent="{Binding ToggleSwitchOffContent}"
+                        ToggleSwitchOnContent="{Binding ToggleSwitchOnContent}"
+                        ToggleSwitchWidth="{Binding ToggleSwitchWidth}"
+                        Margin="0,0,0,8"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+
+    </Grid>
 </Page>
