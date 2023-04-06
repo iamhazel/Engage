@@ -1,3 +1,4 @@
+<!--  Engage.Views.SettingsPage.xaml  -->
 <Page
     x:Class="Engage.Views.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -25,32 +26,31 @@
                 FontSize="28"
                 FontWeight="Bold"
                 Text="Settings" />
+            <Button
+                Margin="0,0,0,10"
+                Click="DebugButton_Click"
+                Content="Debug" />
         </StackPanel>
 
         <ItemsControl
             Grid.Row="1"
-            MinWidth="512"
+            Width="512"
             MaxWidth="1200"
             HorizontalAlignment="Stretch"
             ItemsSource="{Binding SettingCards}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="vm:SettingsCardViewModel">
-                    <controls:SettingsCardControl
-                        Margin="0,0,0,8"
-                        CardBackground="{Binding CardBackground}"
-                        CardBorderBrush="{Binding CardBorderBrush}"
-                        CardCornerRadius="{Binding CardCornerRadius}"
-                        CardSubtitle="{Binding CardSubtitle}"
-                        CardTitle="{Binding CardTitle}"
-                        CardWidth="{Binding CardWidth}"
-                        ClickGlyph="{Binding ClickGlyph}"
-                        IconFontSize="{Binding IconFontSize}"
-                        IconGlyph="{Binding IconGlyph}"
-                        ToggleSwitchIsEnabled="{Binding ToggleSwitchIsEnabled}"
-                        ToggleSwitchMargin="{Binding ToggleSwitchMargin}"
-                        ToggleSwitchOffContent="{Binding ToggleSwitchOffContent}"
-                        ToggleSwitchOnContent="{Binding ToggleSwitchOnContent}"
-                        ToggleSwitchWidth="{Binding ToggleSwitchWidth}" />
+                    <Grid>
+                        <controls:SettingsCardControl
+                            Margin="0,0,0,8"
+                            CardBackground="{Binding CardBackground}"
+                            CardBorderBrush="{Binding CardBorderBrush}"
+                            CardSubtitle="{Binding CardSubtitle}"
+                            CardTitle="{Binding CardTitle}"
+                            ClickGlyph="{Binding ClickGlyph}"
+                            IconFontSize="{Binding IconFontSize}"
+                            IconGlyph="{Binding IconGlyph}" />
+                    </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

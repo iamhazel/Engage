@@ -1,16 +1,17 @@
+<!--  Engage.Views.Controls.SettingsCardControl.xaml  -->
 <UserControl
     x:Class="Engage.Views.Controls.SettingsCardControl"
+    x:Name="SettingsCardControlElement"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Grid
         x:Name="SettingsCard"
         Padding="10"
-        Background="{Binding CardBackground, ElementName=SettingsCard}"
-        BorderBrush="{Binding CardBorderBrush, ElementName=SettingsCard}"
-        BorderThickness="{Binding CardBorderThickness, ElementName=SettingsCard}"
-        CornerRadius="{Binding CardCornerRadius, ElementName=SettingsCard}">
+        Background="{Binding CardBackground, ElementName=SettingsCardControlElement}"
+        BorderBrush="{Binding CardBorderBrush, ElementName=SettingsCardControlElement}"
+        BorderThickness="1"
+        CornerRadius="4">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -23,9 +24,9 @@
             Grid.Column="0"
             Margin="12"
             VerticalAlignment="Center"
-            FontSize="{Binding IconFontSize, ElementName=SettingsCard}"
+            FontSize="{Binding IconFontSize, ElementName=SettingsCardControlElement}"
             Foreground="Black"
-            Glyph="{Binding IconGlyph, ElementName=SettingsCard}" />
+            Glyph="{Binding IconGlyph, ElementName=SettingsCardControlElement}" />
 
         <Grid
             Grid.Column="1"
@@ -40,20 +41,20 @@
                 FontSize="16"
                 FontWeight="SemiBold"
                 Foreground="Black"
-                Text="{Binding CardTitle, ElementName=SettingsCard}" />
+                Text="{Binding CardTitle, ElementName=SettingsCardControlElement}" />
             <TextBlock
-                x:Name="CardSubtitleTextBlock"
                 Grid.Row="1"
                 FontSize="15"
                 FontWeight="Normal"
                 Foreground="{StaticResource SystemControlForegroundBaseMediumLowBrush}"
-                Text="{Binding CardSubtitle, ElementName=SettingsCard}" />
+                Text="{Binding CardSubtitle, ElementName=SettingsCardControlElement}" />
         </Grid>
 
-        <ContentPresenter Grid.Column="2" Content="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}" />
+        <ContentPresenter
+            Grid.Column="2"
+            VerticalAlignment="Center" />
 
-
-        <Grid
+        <!--<Grid
             Grid.Column="3"
             Margin="{Binding ToggleSwitchMargin, ElementName=SettingsCard}"
             VerticalAlignment="Center">
@@ -75,7 +76,7 @@
                 IsEnabled="{Binding ToggleSwitchIsEnabled, ElementName=SettingsCard}"
                 OffContent="{Binding ToggleSwitchOffContent, ElementName=SettingsCard}"
                 OnContent="{Binding ToggleSwitchOnContent, ElementName=SettingsCard}" />
-        </Grid>
+        </Grid>-->
 
         <FontIcon
             Grid.Column="4"
@@ -83,17 +84,6 @@
             VerticalAlignment="Center"
             FontSize="18"
             Foreground="Black"
-            Glyph="{Binding ClickGlyph, ElementName=SettingsCard}" />
-
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="PointerStates">
-                <VisualState x:Name="Normal" />
-                <VisualState x:Name="PointerOver">
-                    <VisualState.Setters>
-                        <Setter Target="SettingsCard.Background" Value="{StaticResource AppBarBorderThemeBrush}" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
+            Glyph="{Binding ClickGlyph, ElementName=SettingsCardControlElement}" />
     </Grid>
 </UserControl>
