@@ -6,7 +6,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 
 // Engage.Views.Controls.SettingsCardControl.xaml.cs
-namespace Engage.Views.Controls
+namespace Engage.Controls
 {
     public partial class SettingsCardControl : UserControl, INotifyPropertyChanged
     {

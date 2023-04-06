@@ -3,8 +3,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Microsoft.UI.Xaml.Controls;
 
-// Engage.Views.Models.SettingsViewModel.cs
-namespace Engage.Views.Models
+// Engage.Models.SettingsViewModel.cs
+namespace Engage.Models
 {
     public class SettingsViewModel : INotifyPropertyChanged
     {
@@ -25,14 +25,21 @@ namespace Engage.Views.Models
         {
             SettingCards = new ObservableCollection<SettingsCardViewModel>();
 
-            // Add your different settings cards here
+            SettingCards.Add(new SettingsCardViewModel
+            {
+                CardTitle = "General",
+                CardSubtitle = "Change general settings.",
+                IconGlyph = "\uE713",
+                IconFontSize = 24
+            });
+
             SettingCards.Add(new SettingsCardViewModel
             {
                 CardTitle = "Services",
                 CardSubtitle = "Add, update, or remove API services.",
                 IconGlyph = "\uE945",
                 IconFontSize = 24,
-                QuickControl = new Button { Content = "Click me" }
+                QuickControl = new ToggleSwitch { OnContent = "Connected", OffContent = "No Connections", IsEnabled = false, IsOn = true }
             });
 
             SettingCards.Add(new SettingsCardViewModel
@@ -41,7 +48,7 @@ namespace Engage.Views.Models
                 CardSubtitle = "Change the look and feel of the app.",
                 IconGlyph = "\uE790",
                 IconFontSize = 24,
-                QuickControl = new ComboBox { Items = { "Item 1", "Item 2", "Item 3" }, SelectedIndex = 0 }
+                QuickControl = new ComboBox { Items = { "System Default", "Dark Mode", "Light Mode" }, SelectedIndex = 0 }
             });
         }
 

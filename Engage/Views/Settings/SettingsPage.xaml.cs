@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using Engage.Views.Models;
+using Engage.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 

@@ -3,8 +3,8 @@
     x:Class="Engage.Views.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:Engage.Views.Controls"
-    xmlns:vm="using:Engage.Views.Models">
+    xmlns:controls="using:Engage.Controls"
+    xmlns:vm="using:Engage.Models">
 
     <Page.DataContext>
         <vm:SettingsViewModel />
@@ -34,7 +34,7 @@
 
         <ItemsControl
             Grid.Row="1"
-            Width="768"
+            MinWidth="512"
             MaxWidth="1024"
             HorizontalAlignment="Stretch"
             ItemsSource="{Binding SettingCards}">

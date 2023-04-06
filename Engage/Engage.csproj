@@ -14,10 +14,13 @@
   <ItemGroup>
     <None Remove="Assets\Logo_32x32.png" />
     <None Remove="Views\ChatPage.xaml" />
-    <None Remove="Views\Controls\ChatMessageBox.xaml" />
-    <None Remove="Views\Controls\SettingsCardControl.xaml" />
+    <None Remove="Controls\ChatMessageControl.xaml" />
+    <None Remove="Controls\SettingsCardControl.xaml" />
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
+    <None Remove="Views\Settings\SettingsAppearancePage.xaml" />
+    <None Remove="Views\Settings\SettingsGeneralPage.xaml" />
+    <None Remove="Views\Settings\SettingsServicesPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,12 +48,12 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\Controls\SettingsCardControl.xaml">
+    <Page Update="Views\Settings\SettingsAppearancePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\Controls\ChatMessageBox.xaml">
+    <Page Update="Views\Settings\SettingsServicesPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
@@ -66,6 +69,11 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Settings\SettingsGeneralPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
