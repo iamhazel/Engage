@@ -70,6 +70,16 @@ namespace Engage.Views.Controls
         }
 
 
+        public static readonly DependencyProperty QuickControlProperty =
+            DependencyProperty.Register("QuickControl", typeof(object), typeof(SettingsCardControl), new PropertyMetadata(null));
+
+        public object QuickControl
+        {
+            get { return (object)GetValue(QuickControlProperty); }
+            set { SetValue(QuickControlProperty, value); }
+        }
+
+
         public static readonly DependencyProperty ClickGlyphProperty =
             DependencyProperty.Register("ClickGlyph", typeof(string), typeof(SettingsCardControl), new PropertyMetadata(null));
 

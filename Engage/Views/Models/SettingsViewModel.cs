@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Microsoft.UI.Xaml.Controls;
 
 // Engage.Views.Models.SettingsViewModel.cs
 namespace Engage.Views.Models
@@ -31,6 +32,7 @@ namespace Engage.Views.Models
                 CardSubtitle = "Add, update, or remove API services.",
                 IconGlyph = "\uE945",
                 IconFontSize = 24,
+                QuickControl = new Button { Content = "Click me" }
             });
 
             SettingCards.Add(new SettingsCardViewModel
@@ -39,6 +41,7 @@ namespace Engage.Views.Models
                 CardSubtitle = "Change the look and feel of the app.",
                 IconGlyph = "\uE790",
                 IconFontSize = 24,
+                QuickControl = new ComboBox { Items = { "Item 1", "Item 2", "Item 3" }, SelectedIndex = 0 }
             });
         }
 

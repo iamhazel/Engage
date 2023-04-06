@@ -34,8 +34,8 @@
 
         <ItemsControl
             Grid.Row="1"
-            Width="512"
-            MaxWidth="1200"
+            Width="768"
+            MaxWidth="1024"
             HorizontalAlignment="Stretch"
             ItemsSource="{Binding SettingCards}">
             <ItemsControl.ItemTemplate>
@@ -49,7 +49,8 @@
                             CardTitle="{Binding CardTitle}"
                             ClickGlyph="{Binding ClickGlyph}"
                             IconFontSize="{Binding IconFontSize}"
-                            IconGlyph="{Binding IconGlyph}" />
+                            IconGlyph="{Binding IconGlyph}"
+                            QuickControl="{Binding QuickControl}" />
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
