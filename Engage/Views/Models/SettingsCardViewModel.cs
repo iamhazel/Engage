@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 
-namespace EngageV2.Views.Models;
+namespace Engage.Views.Models;
 
 public class SettingsCardViewModel : INotifyPropertyChanged
 {

@@ -1,6 +1,6 @@
 using Microsoft.UI.Xaml.Controls;
 
-namespace EngageV2.Views;
+namespace Engage.Views;
 
 public sealed partial class HomePage : Page
 {

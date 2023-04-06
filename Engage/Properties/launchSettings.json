@@ -1,9 +1,9 @@
 {
   "profiles": {
-    "EngageV2 (Package)": {
+    "Engage (Package)": {
       "commandName": "MsixPackage"
     },
-    "EngageV2 (Unpackaged)": {
+    "Engage (Unpackaged)": {
       "commandName": "Project"
     }
   }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.UI.Xaml;
-using EngageV2.Views;
+using Engage.Views;
 
-namespace EngageV2;
+namespace Engage;
 
 public partial class App : Application
 {

@@ -6,7 +6,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Windows.UI;
 
-namespace EngageV2.Views.Models
+namespace Engage.Views.Models
 {
     public class SettingsViewModel : INotifyPropertyChanged
     {

@@ -1,12 +1,9 @@
 <Page
-    x:Class="EngageV2.Views.SettingsPage"
+    x:Class="Engage.Views.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:EngageV2.Views.Controls"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="using:EngageV2.Views.Models"
-    mc:Ignorable="d">
+    xmlns:controls="using:Engage.Views.Controls"
+    xmlns:vm="using:Engage.Views.Models">
 
     <Page.DataContext>
         <vm:SettingsViewModel />
@@ -14,7 +11,7 @@
 
     <Grid
         x:Name="SettingsCardGrid"
-        Padding="20"
+        Padding="40"
         RowSpacing="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -22,15 +19,29 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <ItemsControl ItemsSource="{Binding SettingCards}" HorizontalAlignment="Stretch" Width="800">
+        <StackPanel Grid.Row="0" Orientation="Vertical">
+            <TextBlock
+                Margin="0,0,0,10"
+                FontSize="28"
+                FontWeight="Bold"
+                Text="Settings" />
+        </StackPanel>
+
+        <ItemsControl
+            Grid.Row="1"
+            MinWidth="512"
+            MaxWidth="1200"
+            HorizontalAlignment="Stretch"
+            ItemsSource="{Binding SettingCards}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="vm:SettingsCardViewModel">
                     <controls:SettingsCardControl
-                        CardTitle="{Binding CardTitle}"
-                        CardSubtitle="{Binding CardSubtitle}"
+                        Margin="0,0,0,8"
                         CardBackground="{Binding CardBackground}"
                         CardBorderBrush="{Binding CardBorderBrush}"
                         CardCornerRadius="{Binding CardCornerRadius}"
+                        CardSubtitle="{Binding CardSubtitle}"
+                        CardTitle="{Binding CardTitle}"
                         CardWidth="{Binding CardWidth}"
                         ClickGlyph="{Binding ClickGlyph}"
                         IconFontSize="{Binding IconFontSize}"
@@ -39,12 +50,9 @@
                         ToggleSwitchMargin="{Binding ToggleSwitchMargin}"
                         ToggleSwitchOffContent="{Binding ToggleSwitchOffContent}"
                         ToggleSwitchOnContent="{Binding ToggleSwitchOnContent}"
-                        ToggleSwitchWidth="{Binding ToggleSwitchWidth}"
-                        Margin="0,0,0,8"/>
+                        ToggleSwitchWidth="{Binding ToggleSwitchWidth}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-
-
     </Grid>
 </Page>

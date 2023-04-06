@@ -1,12 +1,12 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using EngageV2.Views.Models;
+using Engage.Views.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 
-namespace EngageV2.Views.Controls
+namespace Engage.Views.Controls
 {
     public partial class SettingsCardControl : UserControl, INotifyPropertyChanged
     {
@@ -83,8 +83,16 @@ namespace EngageV2.Views.Controls
         }
 
         public static readonly DependencyProperty CardSubtitleProperty =
-            DependencyProperty.Register("CardSubtitle", typeof(string), typeof(SettingsCardControl), new PropertyMetadata(null));
+            DependencyProperty.Register("CardSubtitle", typeof(string), typeof(SettingsCardControl), new PropertyMetadata(null, OnCardSubtitlePropertyChanged));
 
+        private static void OnCardSubtitlePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as SettingsCardControl;
+            if (control != null)
+            {
+                control.OnCardSubtitleChanged(e.NewValue as string);
+            }
+        }
         public string CardSubtitle
         {
             get { return (string)GetValue(CardSubtitleProperty); }
@@ -148,22 +156,17 @@ namespace EngageV2.Views.Controls
         public SettingsCardControl()
         {
             InitializeComponent();
-            SettingsCard.PointerEntered += SettingsCard_PointerEntered;
-            SettingsCard.PointerExited += SettingsCard_PointerExited;
         }
 
-        public SettingsCardControl(SettingsViewModel viewModel) : this()
+        protected override void OnPointerEntered(PointerRoutedEventArgs e)
         {
-            DataContext = viewModel;
-        }
-
-        private void SettingsCard_PointerEntered(object sender, PointerRoutedEventArgs e)
-        {
+            base.OnPointerEntered(e);
             VisualStateManager.GoToState(this, "PointerOver", true);
         }
 
-        private void SettingsCard_PointerExited(object sender, PointerRoutedEventArgs e)
+        protected override void OnPointerExited(PointerRoutedEventArgs e)
         {
+            base.OnPointerExited(e);
             VisualStateManager.GoToState(this, "Normal", true);
         }
 
@@ -173,5 +176,21 @@ namespace EngageV2.Views.Controls
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private void OnCardSubtitleChanged(string newValue)
+        {
+            if (string.IsNullOrEmpty(newValue))
+            {
+                // hide the CardSubtitle TextBlock if the value is null or empty
+                CardSubtitleTextBlock.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                // show the CardSubtitle TextBlock and update its text
+                CardSubtitleTextBlock.Visibility = Visibility.Visible;
+                CardSubtitleTextBlock.Text = newValue;
+            }
+        }
+
     }
 }

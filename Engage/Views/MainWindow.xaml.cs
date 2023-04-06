@@ -1,14 +1,8 @@
-using System;
-using System.Diagnostics;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Dispatching;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
-using Microsoft.UI.Xaml.Controls.Primitives;
 
-namespace EngageV2.Views;
+namespace Engage.Views;
 
 public sealed partial class MainWindow : Window
 {

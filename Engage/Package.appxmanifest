@@ -15,7 +15,7 @@
   <mp:PhoneIdentity PhoneProductId="5ba6947d-3d09-4b22-824a-395a7873f7fa" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>EngageV2</DisplayName>
+    <DisplayName>Engage</DisplayName>
     <PublisherDisplayName>heyze</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -34,7 +34,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="EngageV2"
+        DisplayName="Engage"
         Description="Engage"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
