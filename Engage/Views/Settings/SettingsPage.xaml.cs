@@ -16,8 +16,8 @@ public sealed partial class SettingsPage : Page
         DataContext = ViewModel;
     }
 
-    private void DebugButton_Click(object sender, RoutedEventArgs e)
+    private void OnSettingsServicesClick(object sender, RoutedEventArgs e)
     {
-        Debug.WriteLine($"SettingCards count: {ViewModel.SettingCards.Count}");
+        Frame.Navigate(typeof(Engage.Views.Settings.SettingsServicesPage));
     }
 }

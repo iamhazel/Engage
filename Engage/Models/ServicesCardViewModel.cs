@@ -1,11 +1,12 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 
-// Engage.Models.SettingsCardViewModel.cs
+// Engage.Models.ServicesCardViewModel.cs
 namespace Engage.Models;
 
-public class SettingsCardViewModel
+public class ServicesCardViewModel
 {
+
     public string CardTitle { get; set; } = "Default Title";
     public string CardSubtitle { get; set; } = "Default subtitle";
     public SolidColorBrush CardBackground { get; set; } = (SolidColorBrush)Application.Current.Resources["SystemControlBackgroundAltHighBrush"];
